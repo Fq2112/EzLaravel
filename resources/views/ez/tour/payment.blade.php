@@ -93,7 +93,7 @@
                 <br>
                 <div class="w3-container -align-center center-block">
                     <div class="col-md-12">
-                        <h2>Selesaikan Pembayaran</h2>
+                        <h2><i class="fa fa-bank"></i> Selesaikan Pembayaran</h2>
                         <div class="w3-panel w3-card">
                             <br>
                             <h4 style="color: #0C4487" id="demo"></h4> <h4>Sisa waktu anda</h4>
@@ -128,12 +128,31 @@
                                     }
                                 }, 1000);
                             </script>
-                            <br><br>
-                            <br><br><br><br>
-                            <p>Setelah anda melakukan pembayaran, silahkan klik tombol konfirmasi pembayaran</p>
+                            <br><br><br><br><br><br>
+                            <p>Setelah anda melakukan pembayaran, silahkan klik tombol dibawah ini</p>
                             <br>
-                            <button type="button" class="btn btn-primary">Konfirmasi Pembayaran</button>
-                            <br><br>
+                            <?php $harga = ($request->total) ?>
+                            <form class="form-horizontal" role="form" method="post" action="/ez/tour/tours">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="name" value="{{$request->name}}">
+                                <input type="hidden" name="email" value="{{$request->email}}">
+                                <input type="hidden" name="phone" value="{{$request->phone}}">
+                                <input type="hidden" name="total" value="{{$harga}}">
+                                <input type="hidden" name="destination" value="{{$request->destination}}">
+                                <input type="hidden" name="tgl_keberangkatan" value="{{$request->tgl_keberangkatan}}">
+                                <input type="hidden" name="jml_orang" value="{{$request->jml_orang}}">
+                                <input type="hidden" name="catatan" value="{{$request->catatan}}">
+                                <button title="Dengan mengklik tombol ini maka anda akan mendapatkan nomor booking."
+                                        data-toggle="tooltip" data-placement="bottom" type="submit"
+                                        class="btn btn-primary"><strong>KONFIRMASI PEMBAYARAN <i
+                                                class="fa fa-chevron-right"></i></strong></button>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('[data-toggle="tooltip"]').tooltip();
+                                    });
+                                </script>
+                            </form>
+                            <br>
                         </div>
                     </div>
                 </div>

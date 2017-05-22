@@ -4,6 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\SocialProvider;
 use App\User;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use Mail;
+use App\Mail\verifyEmail;
+use Illuminate\Support\Str;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -45,7 +53,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -61,18 +69,76 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'verifyToken' => Str::random(40),
         ]);
+        $thisUser = User::findOrFail($user->id);
+        $this->sendEmail($thisUser);
+        return $user;
     }
+
+    public function verifyEmailFirst()
+    {
+        $sql = DB::table('users')->ORDERBY('id', 'desc')->LIMIT(1)->get();
+        return view('auth.email.sendVerify', compact('sql'));
+    }
+
+    public function sendEmail($thisUser)
+    {
+        Mail::to($thisUser['email'])->send(new verifyEmail($thisUser));
+    }
+
+    public function sendEmailDone($email, $verifyToken)
+    {
+        $user = User::where(['email' => $email, 'verifyToken' => $verifyToken])->first();
+        if ($user) {
+            User::where(['email' => $email, 'verifyToken' => $verifyToken])->update(['status' => '1', 'verifyToken' => null]);
+            return view('auth.email.verified');
+        } else {
+            return view('auth.email.error');
+        }
+    }
+
+    public function notrobot()
+    {
+        $token = Input::get('_token');
+        $recaptcha = Input::get('g-recaptcha-response');
+        return view('auth.login', compact('token', 'recaptcha'));
+    }
+
+    /*public function notrobot(Request $request)
+    {
+        $token = $request->input('g-recaptcha-response');
+
+        if ($token) {
+            $client = new Client();
+            $response = $client->post('https://www.google.com/recaptcha/api/siteverify',[
+                'form_params' => array(
+                    'secret'    => '6LfDTyIUAAAAAAeKQTu_V4VnjPw4APNenCjI9y6l',
+                    'response'  => $token
+                )
+            ]);
+            $result = json_decode($response->getBody()->getContents());
+            if($result->success){
+                Session::flash('success','You`re human');
+                return view('auth.login');
+            }else{
+                Session::flash('error','You`re robot!');
+                return redirect('sendEmailDone');
+            }
+        } else {
+            return redirect('register/success');
+        }
+    }*/
 
     /**
      * Redirect the user to the GitHub authentication page.

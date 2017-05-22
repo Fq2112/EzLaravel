@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -38,6 +40,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        $token = Input::get('_token');
+        $recaptcha = Input::get('g-recaptcha-response');
+        return view('auth.login', compact('token', 'recaptcha'));
     }
 
     /**
@@ -106,5 +115,17 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('twitter')->user();
         return $user->name;
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+//        return $request->only($this->username(), 'password');
+        return ['email' => $request{$this->username()}, 'password' => $request->password, 'status' => '1'];
     }
 }

@@ -13,5 +13,11 @@
             </div>
         </div>
     </div>
+    <script>
+        t1 = window.setTimeout(function () {
+            alert("Sesi anda telah habis! Klik OK untuk mengulangi proses pemesanan.");
+            window.location = "/ez";
+        }, 600000);
+    </script>
 </div>
 @endsection

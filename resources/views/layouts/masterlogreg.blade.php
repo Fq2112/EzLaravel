@@ -11,18 +11,18 @@
     <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="/js/jquery.min.js"></script>
     <!-- Custom Theme files -->
+
+    <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+    <link href="/bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+    <link href="/bootstrap-social-gh-pages/assets/css/font-awesome.css" rel="stylesheet">
+    <link href="/bootstrap-social-gh-pages/assets/css/docs.css" rel="stylesheet">
+
     <!--theme-style-->
     <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/jquery-ui.min.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/datepicker.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/datepicker-bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
     <link rel="stylesheet" href="/css/chocolat.css" type="text/css">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
-    <link href="/bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
-    <link href="/bootstrap-social-gh-pages/assets/css/font-awesome.css" rel="stylesheet">
-    <link href="/bootstrap-social-gh-pages/assets/css/docs.css" rel="stylesheet">
 
     <!--//theme-style-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -43,7 +43,8 @@
     <script src="/js/bootstrap.min.js"></script>
     <!---->
     <link href='//fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700italic,700,680italic,680,400italic,300italic,300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700italic,700,680italic,680,400italic,300italic,300'
+          rel='stylesheet' type='text/css'>
     <script src="/js/jquery.chocolat.js"></script>
     <!--lightboxfiles-->
     <script type="text/javascript">
@@ -161,28 +162,8 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav cl-effect-11">
-                                @if (Auth::guest())
-                                    <li><a data-hover="Login" href="{{ route('login') }}">Login</a></li>
-                                    <li><a data-hover="Register" href="{{ route('register') }}">Register</a></li>
-                                @else
-                                    <li class="dropdown">
-                                        <a data-hover="{{Auth::user()->email}}" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                            {{ Auth::user()->email }} <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="{{ route('logout') }}"
-                                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                                    Logout
-                                                </a>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                    {{ csrf_field() }}
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                @endif
+                                <li><a data-hover="Login" href="{{ route('login') }}">Login</a></li>
+                                <li><a data-hover="Register" href="{{ route('register') }}">Register</a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->

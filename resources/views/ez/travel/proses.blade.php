@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Ez Travel - Tour`s Form')
+@section('title', 'Ez Travel - Travel`s Form')
 
 @section('content')
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -48,8 +48,8 @@
     <div class="content">
         <div class="promotions">
             <div class="container">
-                <h3 class="tittle">Cek Pesanan Anda</h3>
-                <span>Ez Travel - Tour</span>
+                <h3 class="tittle">Proses </h3>
+                <span>Ez Travel - Travel</span>
                 <center>
                     <div class="container" style="width: 51%">
                         <div class="progress-group">
@@ -95,63 +95,67 @@
                     <div class="col-md-12">
                         <div class="w3-panel w3-card">
                             <br><br><br>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>Operator</th>
-                                        <th>Tipe</th>
-                                        <th>Tanggal Berangkat</th>
-                                        <th>Jam Berangkat</th>
-                                        <th>Tanggal Tiba</th>
-                                        <th>Jam Tiba</th>
-                                        <th>Harga</th>
-                                        <th>&nbsp;</th>
+                            <style>
+                                .loader {
+                                    border: 16px solid #f3f3f3;
+                                    border-radius: 50%;
+                                    border-top: 16px solid #3498db;
+                                    width: 120px;
+                                    height: 120px;
+                                    -webkit-animation: spin 2s linear infinite;
+                                    animation: spin 2s linear infinite;
+                                }
 
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <td>PO Eka</td>
-                                        <td><span class="fa fa-bus"></span></td>
-                                        <td>25 April 2017t</td>
-                                        <td>18.00</td>
-                                        <td>26 April 2017</td>
-                                        <td>14.00</td>
-                                        <td>Rp. 25.0000</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Pilih</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>PO Eka</td>
-                                        <td><span class="fa fa-car"></span></td>
-                                        <td>25 April 2017t</td>
-                                        <td>18.00</td>
-                                        <td>26 April 2017</td>
-                                        <td>14.00</td>
-                                        <td>Rp. 25.0000</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Pilih</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>PO Eka</td>
-                                        <td><span class="fa fa-bus"></span></td>
-                                        <td>25 April 2017t</td>
-                                        <td>18.00</td>
-                                        <td>26 April 2017</td>
-                                        <td>14.00</td>
-                                        <td>Rp. 25.0000</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary">Pilih</button>
-                                        </td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                                @-webkit-keyframes spin {
+                                    0% {
+                                        -webkit-transform: rotate(0deg);
+                                    }
+                                    100% {
+                                        -webkit-transform: rotate(360deg);
+                                    }
+                                }
+
+                                @keyframes spin {
+                                    0% {
+                                        transform: rotate(0deg);
+                                    }
+                                    100% {
+                                        transform: rotate(360deg);
+                                    }
+                                }
+                            </style>
+                            <center>
+                                <div class="loader"></div>
+                            </center>
+                            <br><br><br>
+                            <center><p>Mohon tunggu sebentar, pesanan anda sedang diproses</p></center>
+
                         </div>
                     </div>
+
+                    {{--<div class="col-md-8">--}}
+                    {{--<h2>&nbsp;</h2>--}}
+                    {{--<div class="w3-panel w3-card" style="height: 32.3%">--}}
+                    {{--<h4>Lanjut Ke Pembayaran</h4>--}}
+
+                    {{--<div class="text-center">--}}
+                    {{--<button type="button" class="btn btn-primary">Lanjut Ke Pembayaran</button>--}}
+                    {{--<br><br>--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
+
+
                 </div>
             </div>
+        </div>
+    </div>
+    @foreach($sql as $row)
+        <?php $kode = sprintf("%010d", $row->id)?>
+        <script>
+            t1 = window.setTimeout(function () {
+                window.location = "/ez/travel/{{$kode.'-'.$row->email}}/e-ticket";
+            }, 5000);
+        </script>
+    @endforeach
 @endsection

@@ -93,42 +93,38 @@
                 <br>
                 <div class="w3-container">
                     <div class="col-md-8">
-                        <h2>Detail Pesanan</h2>
+                        <h2><i class="fa fa-ticket"></i> Detail E-Ticket</h2>
                         <div class="w3-panel w3-card"><br>
                             <div class="col-md-12">
                                 <table>
                                     <tr>
                                         <td>Kode Booking</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>0000001</strong></td>
+                                        <?php $kode = sprintf("%010d", $tourform->id) ?>
+                                        <td><strong>{{$kode}}</strong></td>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                        <td>Tanggal Keberangkatan</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>YYYY-MM-DD</strong></td>
+
                                     </tr>
-                                    @if(Auth::guest())
-                                        <tr>
-                                            <td>Nama Lengkap</td>
-                                            <td>&nbsp;:&nbsp;&nbsp;</td>
-                                            <td><strong></strong></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    @else
-                                        <tr>
-                                            <td>Nama Lengkap</td>
-                                            <td>&nbsp;:&nbsp;&nbsp;</td>
-                                            <td><strong>{{Auth::user()->name}} {{Auth::user()->lastname}}</strong></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    @endif
                                     <tr>
                                         <td>Destinasi</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>Surabaya</strong></td>
-                                        <td>&nbsp;</td>
-                                        <td>Paket</td>
+                                        <td><strong>{{$tourform->destination}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama Lengkap</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>A</strong></td>
+                                        <td><strong>{{$tourform->name}}</strong></td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanggal Keberangkatan</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td><strong>{{$tourform->tgl_keberangkatan}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jumlah Peserta</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td><strong>{{$tourform->jml_orang}} Orang</strong></td>
                                     </tr>
                                 </table>
                                 <br>
@@ -137,11 +133,22 @@
                     </div>
                     <div class="col-md-4">
                         <h2>&nbsp;</h2>
-                        <div class="w3-panel w3-card">
-                            <h5 class="text-center">Cetak E-Ticket</h5><br>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-primary">Cetak</button>
-                                <br><br>
+                        <div class="w3-panel w3-card-4"><br>
+                            <div class="col-md-12 text-center">
+                                <h3>Cetak E-Ticket Anda</h3>
+                                <br>
+                                <a href="{{url('ez/tour/'.$tourform->id.'/print')}}">
+                                    <button title="Klik tombol ini untuk mendownload E-Ticket anda."
+                                            data-toggle="tooltip" data-placement="bottom" type="submit"
+                                            class="btn btn-primary"><strong>CETAK <i
+                                                    class="fa fa-chevron-right"></i></strong></button>
+                                </a>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('[data-toggle="tooltip"]').tooltip();
+                                    });
+                                </script>
+                                <hr>
                             </div>
                         </div>
                     </div>
@@ -149,7 +156,6 @@
                 <h1>&nbsp;</h1>
                 <h1>&nbsp;</h1>
                 <h1>&nbsp;</h1>
-                <h5>&nbsp;</h5>
             </div>
         </div>
     </div>

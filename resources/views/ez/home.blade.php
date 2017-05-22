@@ -22,7 +22,7 @@
                 <li class="dropdown">
                     <a data-hover="{{Auth::user()->email}}" href="#" class="dropdown-toggle"
                        data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ Auth::user()->email }} <span class="caret"></span>
+                        {{Auth::user()->email}} <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
@@ -115,81 +115,84 @@
                             </div>
                             <div class="col-xs-3 form-group">
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    CARI TOUR <i class="fa fa-chevron-right"></i>
+                                    CARI TOUR <i class="glyphicon glyphicon-chevron-right"></i>
                                 </button>
                             </div>
                         </form>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="flight">
-                        <form id="form_flight_search" method="get" action="cari-travel.php">
+                        <form id="form_flight_search" method="get" action="/ez/travel">
                             <div class="col-xs-4">
                                 <div class="col-xs-12 form-group">
                                     <label for="departCity">Kota Keberangkatan</label>
-                                    <select class="form-control selectpicker" name="asal" id="destination"
-                                            data-live-search="true">
-                                        <option disabled selected>-- Pilih Kota --</option>
-                                        <?php $kota = (isset($_GET['kota']) ? strtolower($_GET['kota']) : NULL); ?>
-                                        <option value="blitar" <?php if ($kota == 'blitar') {
-                                            echo 'selected';
-                                        } ?>>Blitar
-                                        </option>
-                                        <option value="kediri" <?php if ($kota == 'kediri') {
-                                            echo 'selected';
-                                        } ?>>Kediri
-                                        </option>
-                                        <option value="malang" <?php if ($kota == 'malang') {
-                                            echo 'selected';
-                                        } ?>>Malang
-                                        </option>
-                                        <option value="sidoarjo" <?php if ($kota == 'sidoarjo') {
-                                            echo 'selected';
-                                        } ?>>Sidoarjo
-                                        </option>
-                                        <option value="surabaya" <?php if ($kota == 'surabaya') {
-                                            echo 'selected';
-                                        } ?>>Surabaya
-                                        </option>
+                                    <select class="form-control" name="asal" id="sel1"
+                                            onchange="giveSelection(this.value)" required>
+                                        <option disabled>-- Pilih Kota --</option>
+                                        <?php $asal = (isset($_GET['asal']) ? strtolower($_GET['asal']) : NULL); ?>
+                                        <option value="blitar" selected>Blitar</option>
+                                        <option value="kediri">Kediri</option>
+                                        <option value="malang">Malang</option>
+                                        <option value="sidoarjo">Sidoarjo</option>
+                                        <option value="surabaya">Surabaya</option>
                                     </select>
                                 </div>
                                 <div id="calendar-container" class="col-xs-12 form-group">
                                     <label for="departDate">Tanggal Berangkat</label>
-                                    <input type="date" class="form-control" name="tgl_berangkat"
-                                           style="background-color:white">
+                                    <input type="date" class="form-control"
+                                           name="tgl_berangkat"
+                                           style="background-color:white" required>
                                 </div>
                                 <!-- /.form group -->
                             </div>
                             <div class="col-xs-4">
                                 <div class="col-xs-12 form-group">
                                     <label for="returnCity">Kota Tujuan</label>
-                                    <select class="form-control selectpicker" name="tujuan" id="destination"
-                                            data-live-search="true">
-                                        <option disabled selected>-- Pilih Kota --</option>
-                                        <?php $tujuan = (isset($_GET['tujuan']) ? strtolower($_GET['tujuan']) : NULL); ?>
-                                        <option value="blitar" <?php if ($tujuan == 'blitar') {
-                                            echo 'selected';
-                                        } ?>>Blitar
-                                        </option>
-                                        <option value="kediri" <?php if ($tujuan == 'kediri') {
-                                            echo 'selected';
-                                        } ?>>Kediri
-                                        </option>
-                                        <option value="malang" <?php if ($tujuan == 'malang') {
-                                            echo 'selected';
-                                        } ?>>Malang
-                                        </option>
-                                        <option value="sidoarjo" <?php if ($tujuan == 'sidoarjo') {
-                                            echo 'selected';
-                                        } ?>>Sidoarjo
-                                        </option>
-                                        <option value="surabaya" <?php if ($tujuan == 'surabaya') {
-                                            echo 'selected';
-                                        } ?>>Surabaya
-                                        </option>
+                                    <select class="form-control" name="tujuan" id="sel2">
+                                        <option data-option="blitar" value="Kediri">Kediri</option>
+                                        <option data-option="blitar" value="Malang">Malang</option>
+                                        <option data-option="blitar" value="Sidoarjo">Sidoarjo</option>
+                                        <option data-option="blitar" value="Surabaya">Surabaya</option>
+
+                                        <option data-option="kediri" value="Blitar">Blitar</option>
+                                        <option data-option="kediri" value="Malang">Malang</option>
+                                        <option data-option="kediri" value="Sidoarjo">Sidoarjo</option>
+                                        <option data-option="kediri" value="Surabaya">Surabaya</option>
+
+                                        <option data-option="malang" value="Blitar">Blitar</option>
+                                        <option data-option="malang" value="Kediri">Kediri</option>
+                                        <option data-option="malang" value="Sidoarjo">Sidoarjo</option>
+                                        <option data-option="malang" value="Surabaya">Surabaya</option>
+
+                                        <option data-option="sidoarjo" value="Blitar">Blitar</option>
+                                        <option data-option="sidoarjo" value="Kediri">Kediri</option>
+                                        <option data-option="sidoarjo" value="Malang">Malang</option>
+                                        <option data-option="sidoarjo" value="Surabaya">Surabaya</option>
+
+                                        <option data-option="surabaya" value="Blitar">Blitar</option>
+                                        <option data-option="surabaya" value="Kediri">Kediri</option>
+                                        <option data-option="surabaya" value="Malang">Malang</option>
+                                        <option data-option="surabaya" value="Sidoarjo">Sidoarjo</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="col-xs-12 btn btn-primary btn-block">CARI TRAVEL<i
-                                            class="fa fa-chevron-right"></i></button>
+                                            class="glyphicon glyphicon-chevron-right"></i></button>
                             </div>
+                            <script>
+                                var sel1 = document.querySelector('#sel1');
+                                var sel2 = document.querySelector('#sel2');
+                                var options2 = document.querySelectorAll('option');
+
+                                function giveSelection(selValue) {
+                                    sel2.innerHTML = '';
+                                    for (var i = 0; i < options2.length; i++) {
+                                        if (options2[i].dataset.option === selValue) {
+                                            sel2.appendChild(options2[i]);
+                                        }
+                                    }
+                                }
+
+                                giveSelection(sel1.value);
+                            </script>
                         </form>
                     </div>
                 </div>
@@ -423,7 +426,8 @@
         <div class="container">
             <h3 class="tittle">Kontak</h3>
             <div class="contact-grids">
-                <form role="form" action="{{url('ez/contact')}}" method="post">
+                <form onsubmit="return alert('Terimakasih telah membantu kami untuk menjadi lebih baik :)');"
+                      role="form" action="{{url('ez/contact')}}" method="post">
                     {{csrf_field()}}
                     <div class="col-md-6 grid-contact">
                         @if(Auth::guest())
@@ -479,7 +483,7 @@
                     </div>
                     <div class="col-md-6 grid-contact-in">
                         <textarea name="message" placeholder="pesan anda..." required></textarea>
-                        <input type="submit" onclick="alert('Terimakasih telah menggunakan jasa kami :)')">
+                        <input type="submit">
                     </div>
                     <div class="clearfix"></div>
                 </form>

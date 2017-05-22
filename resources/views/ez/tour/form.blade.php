@@ -93,134 +93,92 @@
                 <br>
                 <form class="form-horizontal" role="form" method="get" action="/ez/tour/review">
                     {{ csrf_field() }}
-                    <div class="form-group">
+                    <div class="form-group form-inline col-md-12">
                         <label class="control-label col-sm-3" for="destination">Destinasi</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" name="destination" placeholder="Destinasi"
                                    value="{{$tour->city->name}}, {{$tour->paket}}" readonly>
                         </div>
+                        <label class="control-label col-sm-2" for="harga">Harga (Rp)</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" name="total" value="{{$tour->harga}}" readonly>
+                        </div>
                     </div>
-                    @if(Auth::guest())
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="name">Nama Lengkap</label>
-                            <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="name">Nama Lengkap</label>
+                        <div class="col-sm-6">
+                            @if(Auth::guest())
                                 <input type="text" class="form-control" name="name" placeholder="Masukkan Nama Lengkap"
                                        required autofocus>
-                            </div>
+                            @else
+                                <input type="text" class="form-control" name="name" placeholder="Masukkan Nama Lengkap"
+                                       value="{{Auth::user()->name}}" required>
+                            @endif
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="email">E-mail</label>
-                            <div class="col-sm-6">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="email">E-mail</label>
+                        <div class="col-sm-6">
+                            @if(Auth::guest())
                                 <input type="email" class="form-control" name="email"
                                        placeholder="Masukkan Alamat Email" required>
-                            </div>
+                            @else
+                                <input type="email" class="form-control" name="email"
+                                       value="{{Auth::user()->email}}" placeholder="Masukkan Alamat Email" required>
+                            @endif
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="handphone">Handphone</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="handphone"
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="handphone">Handphone</label>
+                        <div class="col-sm-6">
+                            @if(Auth::guest())
+                                <input type="text" class="form-control" name="phone"
                                        placeholder="Masukkan Nomor Handphone"
                                        onkeypress="return hanyaAngka(event, false)" maxlength="13" required>
-                                <script>
-                                    function hanyaAngka(e, decimal) {
-                                        var key;
-                                        var keychar;
-                                        if (window.event) {
-                                            key = window.event.keyCode;
-                                        } else if (e) {
-                                            key = e.which;
-                                        } else return true;
-                                        keychar = String.fromCharCode(key);
-                                        if ((key == null) || (key == 0) || (key == 8) || (key == 9) || (key == 13) || (key == 27)) {
-                                            return true;
-                                        } else if ((("0123456789").indexOf(keychar) > -1)) {
-                                            return true;
-                                        } else if (decimal && (keychar == ".")) {
-                                            return true;
-                                        } else return false;
-                                    }
-                                </script>
-                            </div>
-                        </div>
-                        <div class="form-group form-inline">
-                            <label class="control-label col-sm-3" for="date">Tanggal Keberangkatan</label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" name="departure" required>
-                            </div>
-                            <label class="control-label col-sm-2" for="total">Jumlah Orang</label>
-                            <div class="col-sm-2">
-                                <input min="1" max="10" type="number" class="form-control" name="jml_orang"
-                                       placeholder="1" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="note">Catatan Khusus</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="note"
-                                       placeholder="*)Kosongkan Apabila Tidak Ada Catatan Khusus">
-                            </div>
-                        </div>
-                    @else
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="name">Nama Lengkap</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="name"
-                                       value="{{Auth::user()->name}} {{Auth::user()->lastname}}" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="email">E-mail</label>
-                            <div class="col-sm-6">
-                                <input type="email" class="form-control" name="email" value="{{Auth::user()->email}}"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="handphone">Handphone</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="handphone"
+                            @else
+                                <input type="text" class="form-control" name="phone"
                                        placeholder="Masukkan Nomor Handphone"
-                                       onkeypress="return hanyaAngka(event, false)" maxlength="13" autofocus required>
-                                <script>
-                                    function hanyaAngka(e, decimal) {
-                                        var key;
-                                        var keychar;
-                                        if (window.event) {
-                                            key = window.event.keyCode;
-                                        } else if (e) {
-                                            key = e.which;
-                                        } else return true;
-                                        keychar = String.fromCharCode(key);
-                                        if ((key == null) || (key == 0) || (key == 8) || (key == 9) || (key == 13) || (key == 27)) {
-                                            return true;
-                                        } else if ((("0123456789").indexOf(keychar) > -1)) {
-                                            return true;
-                                        } else if (decimal && (keychar == ".")) {
-                                            return true;
-                                        } else return false;
-                                    }
-                                </script>
-                            </div>
+                                       onkeypress="return hanyaAngka(event, false)" maxlength="13" required autofocus>
+                            @endif
+                            <script>
+                                function hanyaAngka(e, decimal) {
+                                    var key;
+                                    var keychar;
+                                    if (window.event) {
+                                        key = window.event.keyCode;
+                                    } else if (e) {
+                                        key = e.which;
+                                    } else return true;
+                                    keychar = String.fromCharCode(key);
+                                    if ((key == null) || (key == 0) || (key == 8) || (key == 9) || (key == 13) || (key == 27)) {
+                                        return true;
+                                    } else if ((("0123456789").indexOf(keychar) > -1)) {
+                                        return true;
+                                    } else if (decimal && (keychar == ".")) {
+                                        return true;
+                                    } else return false;
+                                }
+                            </script>
                         </div>
-                        <div class="form-group form-inline">
-                            <label class="control-label col-sm-3" for="date">Tanggal Keberangkatan</label>
-                            <div class="col-sm-2">
-                                <input type="date" class="form-control" name="departure" required>
-                            </div>
-                            <label class="control-label col-sm-3" for="total">Jumlah Orang</label>
-                            <div class="col-sm-2">
-                                <input min="1" max="10" type="number" class="form-control" name="jml_orang"
-                                       placeholder="1" required>
-                            </div>
+                    </div>
+                    <div class="form-group form-inline col-md-12">
+                        <label class="control-label col-sm-3" for="date">Tanggal Keberangkatan</label>
+                        <div class="col-sm-2">
+                            <input type="date" class="form-control" name="tgl_keberangkatan" required>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="note">Catatan Khusus</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="catatan"
-                                       placeholder="*)Kosongkan Apabila Tidak Ada Catatan Khusus">
-                            </div>
+                        <label class="control-label col-sm-2" for="total">Jumlah Peserta</label>
+                        <div class="col-sm-2">
+                            <input min="1" max="10" type="number" class="form-control" name="jml_orang"
+                                   placeholder="1" required>
                         </div>
-                    @endif
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="note">Catatan Khusus</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="catatan"
+                                   placeholder="*)Kosongkan Apabila Tidak Ada Catatan Khusus">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -230,4 +188,10 @@
             </div>
         </div>
     </div>
+    <script>
+        t1 = window.setTimeout(function () {
+            alert("Sesi anda telah habis! Klik OK untuk mengulangi proses pemesanan.");
+            window.location = "/ez";
+        }, 1200000);
+    </script>
 @endsection

@@ -21,9 +21,6 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit Profile</a>
-                        </li>
-                        <li>
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -60,7 +57,8 @@
                         <form action="/ez/tour" class="" method="get" role="search">
                             <div class="col-xs-3 form-group">
                                 <label>Destinasi Kota</label>
-                                <select class="form-control" name="kota" id="kota" required>
+                                <select required class="form-control selectpicker" name="kota" id="destination"
+                                        data-live-search="true">
                                     <option disabled selected>-- Pilih Kota --</option>
                                     @foreach($city as $row)
                                         <option value="{{$row->id}}" <?php if ($row->id == $tour->city_id) {
@@ -68,6 +66,7 @@
                                         } ?>>{{$row->name}}</option>
                                     @endforeach
                                 </select>
+                                <span class="input-icon"><i class="fa fa-angle-down fa-lg"></i></span>
                             </div>
                             <div class="col-xs-3 form-group">
                                 <button type="submit" class="btn btn-primary btn-block">CARI TOUR <i
@@ -87,62 +86,27 @@
                         <div class="col-md-6 about-grid">
                             <div class="content-carousel" id="beranda">
                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <!-- Indicators -->
+                                    <ol class="carousel-indicators">
+                                        <?php $a = 0 ?>
+                                        @foreach($sql as $row)
+                                            @if($row->tour_id == $tour->id)
+                                                <li data-target="#myCarousel" data-slide-to="{{$a++}}"></li>
+                                            @endif
+                                        @endforeach
+                                    </ol>
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
-                                        <div class="item active">
-                                            <img src="/images/tour/tanah_lot.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/gwk.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/sukawati.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/favorit/bali.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/batu-secret-zoo.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/bns.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/bromo.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/bromo2.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/jatimpark.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/paralayang.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/predator%20fun%20park.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/safari.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/borobudur.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/borobudur2.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/borobudur3.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/malioboro.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/parangtritis.jpg">
-                                        </div>
-                                        <div class="item">
-                                            <img src="/images/tour/prambanan.jpg">
-                                        </div>
+                                        @foreach($sql as $row)
+                                            @if($row->tour_id == $tour->id)
+                                                <div class="item">
+                                                    <img src="/images/tour/{{$row->url}}">
+                                                    <div class="carousel-caption">
+                                                        <h3>{{$row->caption}}</h3>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     </div>
                                     <!-- Left and right controls -->
                                     <a class="left carousel-control" href="#myCarousel" role="button"
@@ -157,6 +121,12 @@
                                                       aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
+                                    <script>
+                                        $(document).ready(function (e) {
+                                            $('.carousel-indicators:nth-child(1)').addClass('active');
+                                            $('.item:nth-child(1)').addClass('active');
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>

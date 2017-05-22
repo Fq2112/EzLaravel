@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-xs-3 form-group">
                                 <button type="submit" class="btn btn-primary btn-block">CARI TOUR <i
-                                            class="fa fa-chevron-right"></i></button>
+                                            class="glyphicon glyphicon-chevron-right"></i></button>
                             </div>
                         </form>
                     </div>

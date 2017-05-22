@@ -12,6 +12,7 @@
     <script src="/js/jquery.min.js"></script>
     <!-- Custom Theme files -->
 
+    <link rel="stylesheet" href="/css/font-awesome.css">
 
     <!--theme-style-->
     <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" media="all"/>
@@ -19,9 +20,8 @@
     <link href="/css/datepicker.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/css/datepicker-bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
     <link rel="stylesheet" href="/css/chocolat.css" type="text/css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css" media="all"/>
-
+{{--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      type="text/css" media="all"/>--}}
 
     <!--//theme-style-->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -384,7 +384,6 @@
                             </div>
                         </div>
                         @yield('content')
-
                         <div class="copy-section">
                             <div class="container">
                                 <div class="footer-top">

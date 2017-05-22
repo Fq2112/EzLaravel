@@ -150,4 +150,12 @@
             </div>
         </div>
     </div>
+    @foreach($sql as $row)
+        <?php $kode = sprintf("%010d", $row->id)?>
+        <script>
+            t1 = window.setTimeout(function () {
+                window.location = "/ez/tour/{{$kode.'-'.$row->email}}/e-ticket";
+            }, 5000);
+        </script>
+    @endforeach
 @endsection
