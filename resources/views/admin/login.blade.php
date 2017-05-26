@@ -9,6 +9,14 @@
             <div class="panel panel-primary">
                 <div class="panel-heading"><strong>Admin Login</strong></div>
                 <div class="panel-body">
+                    @if(session('status'))
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
+                            </button>
+                            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                            {{session('status')}}
+                        </div>
+                    @endif
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.login') }}">
                         {{ csrf_field() }}
 

@@ -156,8 +156,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav cl-effect-11">
-                                <li><a data-hover="Login" href="{{ route('admin.login') }}">Login</a></li>
-                                <li><a data-hover="Register" href="{{ route('admin.register') }}">Register</a></li>
+                                <li><a data-hover="Kembali" href="{{ route('ez') }}">Kembali</a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->

@@ -44,6 +44,11 @@
                                             <strong>{{ $errors->first('password') }}</strong>
                                         </span>
                                     @endif
+                                    <span class="help-block">
+                                        <a href="{{ route('password.request') }}">
+                                            Lupa kata sandi Anda?
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -56,15 +61,14 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Login
                                     </button>
 
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Forgot Your Password?
+                                    <a class="btn btn-link" href="{{ route('register') }}">
+                                        Belum punya akun? Daftar Sekarang!
                                     </a>
                                 </div>
                             </div>

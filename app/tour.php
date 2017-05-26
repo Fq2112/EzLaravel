@@ -11,4 +11,9 @@ class tour extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    protected $fillable = [
+        'url', 'city_id', 'paket', 'durasi', 'harga', 'keterangan', 'fasilitas', 'transportasi',
+    ];
+
 }

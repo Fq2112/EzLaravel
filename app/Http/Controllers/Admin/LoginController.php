@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -38,6 +39,7 @@ class LoginController extends Controller
         }
 
         // if unsuccessful, then redirect back to the login with the form data
+        Session::flash('status', 'ANDA BUKAN ADMIN!');
         return redirect()->back()->withInput($request->only('email', 'remember'));
     }
 

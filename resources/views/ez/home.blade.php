@@ -27,13 +27,17 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit Profile</a>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/history')}}"><i
+                                        class="fa fa-shopping-cart"></i> Riwayat Pemesanan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}"><i class="fa fa-edit"></i> Edit
+                                Profile</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                Logout
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -208,7 +212,7 @@
                     @foreach($sql as $row)
                         <div class="col-md-4 promation-grid">
                             <div class="portfolio-item">
-                                <img src="/images/tour/{{$row->url}}" class="img-responsive" alt="Error"/>
+                                <img src="{{asset('storage/tour/'.$row->url)}}" class="img-responsive" alt="Error"/>
                                 <div class="overlay">
                                     <a id="order" href="ez/tour/{{$row->id}}/detail">
                                         <button class="button d-windows"><h5><strong>DETAIL</strong></h5>

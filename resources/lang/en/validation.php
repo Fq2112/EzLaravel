@@ -102,6 +102,11 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'foto' => [
+        'image' => 'Kolom FOTO hanya boleh berisi file gambar.',
+        'max' => 'Kolom FOTO tidak boleh lebih dari 1 MB.',
+        'mimes' => 'Kolom FOTO hanya boleh diisi file *.jpg, *.jpeg, *.bmp, *.png.',
+    ],
 
     /*
     |--------------------------------------------------------------------------

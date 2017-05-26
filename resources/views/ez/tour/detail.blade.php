@@ -21,13 +21,21 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/history')}}"><i
+                                        class="fa fa-shopping-cart"></i> Riwayat Pemesanan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}"><i class="fa fa-edit"></i> Edit
+                                Profile</a>
+                        </li>
+                        <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                Logout
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>
@@ -100,7 +108,7 @@
                                         @foreach($sql as $row)
                                             @if($row->tour_id == $tour->id)
                                                 <div class="item">
-                                                    <img src="/images/tour/{{$row->url}}">
+                                                    <img src="{{asset('storage/tour/'.$row->url)}}">
                                                     <div class="carousel-caption">
                                                         <h3>{{$row->caption}}</h3>
                                                     </div>

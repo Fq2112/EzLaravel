@@ -21,16 +21,21 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit Profile</a>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/history')}}"><i
+                                        class="fa fa-shopping-cart"></i> Riwayat Pemesanan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}"><i class="fa fa-edit"></i> Edit
+                                Profile</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                Logout
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>
@@ -228,19 +233,18 @@
                                 <br>
                                 <br>
                                 <style>
-                                    #travel th {
+                                    #example1 th {
                                         text-align: center;
                                         vertical-align: middle;
                                     }
 
-                                    #travel td {
+                                    #example1 td {
                                         text-align: center;
                                         vertical-align: middle;
                                     }
                                 </style>
                                 <table class="table table-responsive table-bordered table-hover" width="100%"
-                                       id="travel"
-                                       cellspacing="0">
+                                       id="example1" cellspacing="0">
                                     <thead>
                                     <tr class="bg-primary">
                                         <th>Operator</th>
@@ -291,6 +295,16 @@
                                         </tr>
                                     @endforeach
                                     </tbody>
+                                    <tfoot>
+                                    <tr class="bg-primary">
+                                        <th>Operator</th>
+                                        <th>Tipe</th>
+                                        <th>Keberangkatan</th>
+                                        <th>Kedatangan</th>
+                                        <th>Harga</th>
+                                        <th>Tautan</th>
+                                    </tr>
+                                    </tfoot>
                                 </table>
                                 <br>
                             </div>

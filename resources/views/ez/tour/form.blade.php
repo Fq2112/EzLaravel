@@ -21,16 +21,21 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit Profile</a>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/history')}}"><i
+                                        class="fa fa-shopping-cart"></i> Riwayat Pemesanan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}"><i class="fa fa-edit"></i> Edit
+                                Profile</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                Logout
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>
@@ -165,6 +170,10 @@
                         <label class="control-label col-sm-3" for="date">Tanggal Keberangkatan</label>
                         <div class="col-sm-2">
                             <input type="date" class="form-control" name="tgl_keberangkatan" required>
+                            <script>
+                                var today = new Date().toISOString().split('T')[0];
+                                document.getElementsByName("tgl_keberangkatan")[0].setAttribute('min', today);
+                            </script>
                         </div>
                         <label class="control-label col-sm-2" for="total">Jumlah Peserta</label>
                         <div class="col-sm-2">

@@ -104,46 +104,60 @@ class EzController extends Controller
         return view('ez/tour/report', compact('tourform'));
     }
 
-    public function printTicketTour(tourform $tourform)
+    public function cetakTour(tourform $tourform)
     {
-        $kode = sprintf("%010d", $tourform->id);
-        $html = '<center><h2 class="tittle">Tour E-Ticket</h2>
-                <span>Ez Travel - Easier to Get Travel!</span><hr><br></center>
-                <table>
-                                    <tr>
-                                        <td>Kode Booking</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $kode . '</strong></td>
-                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Destinasi</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $tourform->destination . '</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama Lengkap</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $tourform->name . '</strong></td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanggal Keberangkatan</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $tourform->tgl_keberangkatan . '</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jumlah Peserta</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $tourform->jml_orang . ' Orang</strong></td>
-                                    </tr>
-                </table>';
-        $pdf = PDF::loadHTML($html);
-//        $pdf = PDF::loadView('ez/tour/report', ['tourform' => $tourform]);
-        return $pdf->download('TourTicket_' . $tourform->name . '_' . $tourform->tgl_keberangkatan . '.pdf');
+        return view('ez/tour/cetak', compact('tourform'));
     }
 
+    public function downloadPDFTicketTour(tourform $tourform)
+    {
+        $kode = sprintf("%010d", $tourform->id);
+        $html = '<div>
+<center><img style="width: 10%; length: 10%;"  src="https://i.imgur.com/UHp7uVR.png"></center>
+<center><h2 class="tittle" style="color: #49c2f5">EZ Travel</h2>
+    <span style="color: #49c2f5">Ez Travel - Easier to Get Travel!</span><hr><br></center>
+</div>
+
+<div>
+    <h3>E-ticket Receipt</h3><hr><br>
+</div>
+<table>
+    <tr>
+        <td>Kode Booking</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td style="color: #49c2f5 ;"><strong>' . $kode . '</strong></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+    </tr>
+    <tr>
+        <td>Destinasi</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $tourform->destination . '</strong></td>
+    </tr>
+    <tr>
+        <td>Nama Lengkap</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $tourform->name . '</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>Tanggal Keberangkatan</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $tourform->tgl_keberangkatan . '</strong></td>
+    </tr>
+    <tr>
+        <td>Jumlah Peserta</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $tourform->jml_orang . ' Orang</strong></td>
+    </tr>
+</table>
+
+<br><hr><br>
+
+<p style="color:grey ">Mohon simpan e-tiket ini baik-baik sebagai tanda bukti transaksi anda bersama EZ Travel</p>';
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('TourTicket_' . $tourform->name . '_' . $tourform->tgl_keberangkatan . '.pdf');
+    }
 
     public function showTravel(travel $travel)
     {
@@ -194,55 +208,72 @@ class EzController extends Controller
         return view('ez/travel/report', compact('travelform'));
     }
 
-    public function printTicketTravel(travelform $travelform)
+    public function cetakTravel(travelform $travelform)
+    {
+        return view('ez/travel/cetak', compact('travelform'));
+    }
+
+    public function downloadPDFTicketTravel(travelform $travelform)
     {
         $kode = sprintf("%010d", $travelform->id);
-        $html = '<center><h2 class="tittle">Travel E-Ticket</h2>
-                <span>Ez Travel - Easier to Get Travel!</span><hr><br></center>
-                <table>
-                                    <tr>
-                                        <td>Kode Booking</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $kode . '</strong></td>
-                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama Lengkap</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $travelform->name . '</strong></td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Operator</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $travelform->operator . ' &mdash; ' . $travelform->jenis_kendaraan . '
-                                                (' . $travelform->no_pol . ')</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Keberangkatan</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $travelform->asal . '
-                                                (' . $travelform->tgl_keberangkatan . ' &ndash; ' . $travelform->jadwal_keberangkatan . '
-                                                )</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kedatangan</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $travelform->tujuan . '
-                                                (' . $travelform->tgl_datang . ' &ndash; ' . $travelform->jadwal_datang . '
-                                                )</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jumlah Penumpang</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $travelform->jml_orang . ' Orang</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Catatan Khusus</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td><strong>' . $travelform->note . '</strong></td>
-                                    </tr>
-                </table>';
+        $html = '<div>
+<center><img style="width: 10%; length: 10%;"  src="https://i.imgur.com/UHp7uVR.png"></center>
+<center><h2 class="tittle" style="color: #49c2f5">EZ Travel</h2>
+    <span style="color: #49c2f5">Ez Travel - Easier to Get Travel!</span><hr><br></center>
+</div>
+
+<div>
+    <h3>E-ticket Receipt</h3><hr><br>
+</div>
+<table>
+    <tr>
+        <td>Kode Booking</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td style="color: #49c2f5 ;"><strong>' . $kode . '</strong></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+    </tr>
+    <tr>
+        <td>Nama Lengkap</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $travelform->name . '</strong></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>Operator</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $travelform->operator . ' &mdash; ' . $travelform->jenis_kendaraan . '
+            (' . $travelform->no_pol . ')</strong></td>
+    </tr>
+    <tr>
+        <td>Keberangkatan</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $travelform->asal . '
+            (' . $travelform->tgl_keberangkatan . ' &ndash; ' . $travelform->jadwal_keberangkatan . '
+            )</strong></td>
+    </tr>
+    <tr>
+        <td>Kedatangan</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $travelform->tujuan . '
+            (' . $travelform->tgl_datang . ' &ndash; ' . $travelform->jadwal_datang . '
+            )</strong></td>
+    </tr>
+    <tr>
+        <td>Jumlah Penumpang</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $travelform->jml_orang . ' Orang</strong></td>
+    </tr>
+    <tr>
+        <td>Catatan Khusus</td>
+        <td>&nbsp;:&nbsp;&nbsp;</td>
+        <td><strong>' . $travelform->note . '</strong></td>
+    </tr>
+</table>
+
+<br><hr><br>
+
+<p style="color:grey ">Mohon simpan e-tiket ini baik-baik sebagai tanda bukti transaksi anda bersama EZ Travel</p>';
         $pdf = PDF::loadHTML($html);
         return $pdf->download('TravelTicket_' . $travelform->name . '_' . $travelform->tgl_keberangkatan . '.pdf');
     }
