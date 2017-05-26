@@ -21,16 +21,21 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit Profile</a>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/history')}}"><i
+                                        class="fa fa-shopping-cart"></i> Riwayat Pemesanan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}"><i class="fa fa-edit"></i> Edit
+                                Profile</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                Logout
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>
@@ -137,11 +142,17 @@
                             <div class="col-md-12 text-center">
                                 <h3>Cetak E-Ticket Anda</h3>
                                 <br>
-                                <a href="{{url('ez/tour/'.$tourform->id.'/print')}}">
+                                <a target="_blank" href="{{url('ez/tour/'.$tourform->id.'/cetak')}}">
+                                    <button title="Klik tombol ini untuk mencetak E-Ticket anda."
+                                            data-toggle="tooltip" data-placement="bottom" type="submit"
+                                            class="btn btn-primary"><strong><i
+                                                    class="fa fa-print"></i> CETAK</strong></button>
+                                </a>
+                                <a href="{{url('ez/tour/'.$tourform->id.'/download')}}">
                                     <button title="Klik tombol ini untuk mendownload E-Ticket anda."
                                             data-toggle="tooltip" data-placement="bottom" type="submit"
-                                            class="btn btn-primary"><strong>CETAK <i
-                                                    class="fa fa-chevron-right"></i></strong></button>
+                                            class="btn btn-primary"><strong><i
+                                                    class="fa fa-download"></i> PDF</strong></button>
                                 </a>
                                 <script>
                                     $(document).ready(function () {

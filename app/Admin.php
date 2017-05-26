@@ -3,12 +3,14 @@
 namespace App;
 
 use App\Notifications\AdminResetPasswordNotification;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
     protected $guard = 'admin';
     /**
      * Send the password reset notification.
@@ -27,8 +29,10 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'lastname', 'email', 'password',
+        'url', 'name', 'lastname', 'address', 'education', 'skills', 'biography', 'email', 'password',
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be hidden for arrays.

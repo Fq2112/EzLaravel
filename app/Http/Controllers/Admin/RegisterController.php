@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin;
-use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Session;
+
 
 class RegisterController extends Controller
 {
@@ -24,29 +27,13 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = 'admin/dashboard';
+//    protected $redirectTo = 'admin/dashboard';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest:admin');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -57,32 +44,17 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
+    public function add(array $data)
     {
-        return Admin::create([
+        Admin::create([
             'name' => $data['name'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        Session::flash('berhasil', 'Successfully, add an Admin');
+        return back();
     }
-
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegistrationForm()
-    {
-        return view('admin.register');
-    }
-
     protected function guard()
     {
         return Auth::guard('admin');

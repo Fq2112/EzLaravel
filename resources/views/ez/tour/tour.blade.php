@@ -21,16 +21,21 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit Profile</a>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/history')}}"><i
+                                        class="fa fa-shopping-cart"></i> Riwayat Pemesanan</a>
+                        </li>
+                        <li>
+                            <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}"><i class="fa fa-edit"></i> Edit
+                                Profile</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                Logout
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                  style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>
@@ -123,7 +128,7 @@
                             <div class="portfolio-item">
                                 <img src="/images/tour/question.gif" class="img-responsive" alt=""/>
                                 <div class="overlay">
-                                    <a id="order" href="request-tour.php">
+                                    <a id="order" href="#">
                                         <button class="button d-windows"><h5><strong>DETAIL</strong></h5></button>
                                     </a>
                                 </div>

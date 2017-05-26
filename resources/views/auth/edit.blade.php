@@ -56,23 +56,40 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
-                                <label for="password" class="col-md-4 control-label">Password</label>
+                            <div class="form-group{{ session('password') ? ' has-error' : '' }} has-feedback">
+                                <label for="password" class="col-md-4 control-label">Old Password</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" name="password" required>
                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
-                                    @if ($errors->has('password'))
+                                    @if (session('status'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                            <strong>{{ session('status') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('new_password') ? ' has-error' : '' }} has-feedback">
+                                <label for="password" class="col-md-4 control-label">New Password</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control" name="new_password"
+                                           required>
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                                    @if ($errors->has('new_password'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('new_password') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }} has-feedback">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                                <label for="password-confirm" class="col-md-4 control-label">Confirm New
+                                    Password</label>
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation" required>

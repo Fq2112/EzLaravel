@@ -13,6 +13,7 @@
     <!-- Custom Theme files -->
 
     <link rel="stylesheet" href="/css/font-awesome.css">
+    <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap.css">
 
     <!--theme-style-->
     <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" media="all"/>
@@ -393,5 +394,24 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            var today = new Date().toISOString().split('T')[0];
+                            document.getElementsByName("tgl_berangkat")[0].setAttribute('min', today);
+                        </script>
+                        <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+                        <script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+                        <script>
+                            $(function () {
+                                $("#example1").DataTable();
+                                /*$("#example1").DataTable({
+                                 "paging": false,
+                                 "lengthChange": false,
+                                 "searching": false,
+                                 "ordering": true,
+                                 "info": false,
+                                 "autoWidth": false
+                                 });*/
+                            });
+                        </script>
 </body>
 </html>

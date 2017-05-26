@@ -12,6 +12,8 @@
     <script src="/js/jquery.min.js"></script>
     <!-- Custom Theme files -->
 
+    <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap.css">
+
     <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
     <link href="/bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
     <link href="/bootstrap-social-gh-pages/assets/css/font-awesome.css" rel="stylesheet">
@@ -162,8 +164,35 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav cl-effect-11">
-                                <li><a data-hover="Login" href="{{ route('login') }}">Login</a></li>
-                                <li><a data-hover="Register" href="{{ route('register') }}">Register</a></li>
+                                <li><a data-hover="Kembali" href="{{ route('ez') }}">Kembali</a></li>
+                                @if(Auth::check())
+                                    <li class="dropdown">
+                                        <a data-hover="{{Auth::user()->email}}" href="#" class="dropdown-toggle"
+                                           data-toggle="dropdown"
+                                           role="button" aria-expanded="false" style="text-transform: lowercase">
+                                            {{ Auth::user()->email}} <span class="caret"></span>
+                                        </a>
+
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="{{url('ez/member/'.Auth::user()->id.'/edit')}}">Edit
+                                                    Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('logout') }}"
+                                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                    Logout
+                                                </a>
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                      style="display: none;">
+                                                    {{ csrf_field() }}
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endif
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
