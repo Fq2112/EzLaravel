@@ -244,6 +244,7 @@
                                            value="{{$request->jadwal_datang}}">
                                     <input type="hidden" name="jml_orang" value="{{$request->jml_penumpang}}">
                                     <input type="hidden" name="catatan" value="{{$request->catatan}}">
+                                    <input type="hidden" name="now" value="{{$now}}">
                                     <br>
                                     <button title="Dengan mengklik tombol ini maka anda telah menyetujui syarat dan ketentuan yang berlaku."
                                             data-toggle="tooltip" data-placement="bottom" type="submit"

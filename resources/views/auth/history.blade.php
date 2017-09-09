@@ -24,6 +24,26 @@
                                 vertical-align: middle;
                             }
                         </style>
+                        <div class="text-right">
+                            @if($tourorder > 0)
+                                <a target="_blank" href="{{url('ez/member/history/cetaktour')}}">
+                                    <button data-toggle="tooltip" title="Cetak Riwayat Pemesanan Tour"
+                                            class="btn btn-info">
+                                        <i class="fa fa-print"></i>
+                                    </button>
+                                </a>
+                            @else
+                                <a>
+                                    <button onclick="return alert('Belum ada riwayat pemesanan tour. Silahkan melakukan pemesanan.')"
+                                            data-toggle="tooltip"
+                                            title="Cetak Riwayat Pemesanan Tour"
+                                            class="btn btn-info">
+                                        <i class="fa fa-print"></i>
+                                    </button>
+                                </a>
+                            @endif
+                        </div>
+                        <br>
                         <table class="table table-responsive table-bordered table-hover" width="100%"
                                id="example1" cellspacing="0">
                             <thead>
@@ -88,6 +108,31 @@
                                 vertical-align: middle;
                             }
                         </style>
+                        <div class="text-right">
+                            @if($travelorder > 0)
+                                <a target="_blank" href="{{url('ez/member/history/cetaktravel')}}">
+                                    <button data-toggle="tooltip" title="Cetak Riwayat Pemesanan Travel"
+                                            class="btn btn-info">
+                                        <i class="fa fa-print"></i>
+                                    </button>
+                                </a>
+                            @else
+                                <a>
+                                    <button onclick="return alert('Belum ada riwayat pemesanan travel. Silahkan melakukan pemesanan.')"
+                                            data-toggle="tooltip"
+                                            title="Cetak Riwayat Pemesanan Travel"
+                                            class="btn btn-info">
+                                        <i class="fa fa-print"></i>
+                                    </button>
+                                </a>
+                            @endif
+                        </div>
+                        <br>
+                        <script>
+                            $(document).ready(function () {
+                                $('[data-toggle="tooltip"]').tooltip();
+                            });
+                        </script>
                         <table class="table table-responsive table-bordered table-hover" width="100%"
                                id="example2" cellspacing="0">
                             <thead>

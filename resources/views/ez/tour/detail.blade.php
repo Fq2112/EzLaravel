@@ -88,6 +88,14 @@
         <div class="promotions">
             <div class="about-section" id="about">
                 <div class="container">
+                    @foreach($voucher as $row)
+                        @if(Auth::user())
+                            <h3 class="tittle">Selamat anda mendapatkan Voucher++! Untuk menggunakan voucher ini, anda
+                                harus memasukkan kode berikut saat pengisian form:</h3>
+                            <span><Strong style="text-transform: uppercase">Kode: {{$row->voucher}}</Strong></span>
+                            <hr>
+                        @endif
+                    @endforeach
                     <h3 class="tittle">{{$tour->paket}}</h3>
                     <span>Kota: {{$tour->city->name}}</span>
                     <div class="about-grids">
@@ -108,7 +116,7 @@
                                         @foreach($sql as $row)
                                             @if($row->tour_id == $tour->id)
                                                 <div class="item">
-                                                    <img src="{{asset('storage/tour/'.$row->url)}}">
+                                                    <img src="{{asset('storage/tour/tourpict/'.$row->url)}}">
                                                     <div class="carousel-caption">
                                                         <h3>{{$row->caption}}</h3>
                                                     </div>

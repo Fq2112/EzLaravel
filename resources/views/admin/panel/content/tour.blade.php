@@ -167,7 +167,7 @@
                                             <label class="input-group-btn">
                                                     <span class="btn btn-info">
                                                         Browse&hellip;<input name="url" type="file"
-                                                                             style="display: none;" multiple required>
+                                                                             style="display: none;" required>
                                                     </span>
                                             </label>
                                             <input type="text" id="img_gallery"

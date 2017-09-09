@@ -1,4 +1,4 @@
-@extends('layouts.master')
+'@extends('layouts.master')
 
 @section('title', 'Ez Travel - Tour`s Form')
 
@@ -98,6 +98,15 @@
                 <br>
                 <form class="form-horizontal" role="form" method="get" action="/ez/tour/review">
                     {{ csrf_field() }}
+                    @if(Auth::user())
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="name">Masukkan Kode Voucher</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="voucher"
+                                       placeholder="kosongkan jika tidak mempunyai voucher...">
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group form-inline col-md-12">
                         <label class="control-label col-sm-3" for="destination">Destinasi</label>
                         <div class="col-sm-2">

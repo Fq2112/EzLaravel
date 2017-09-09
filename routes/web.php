@@ -19,6 +19,8 @@ Route::prefix('ez')->group(function () {
     Route::get('/', 'EzController@index')->name('ez');
     Route::get('/member/{user}/edit', 'EditController@showEditForm');
     Route::get('/member/{user}/history', 'EditController@showHistoryForm');
+    Route::get('/member/history/cetaktour', 'EditController@cetakTour');
+    Route::get('/member/history/cetaktravel', 'EditController@cetakTravel');
     Route::put('/member/{user}', 'EditController@update');
     Route::post('/contact', 'EzController@contact');
     Route::get('/{location}/location', 'EzController@location');
@@ -80,6 +82,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/tourcontent/adds', 'AdminController@storeTourContent');
     Route::get('/tourcontent/{tour}/edit', 'AdminController@showEditTourForm');
     Route::put('/tourcontent/{tour}', 'AdminController@UpdateTourContent');
+    Route::post('/tourcontent/tourpict', 'AdminController@storeTourPict');
     Route::get('/tourcontent/{tour}/delete', 'AdminController@deleteTourContent');
 
     Route::get('/travelcontent', 'AdminController@showTravelContent');

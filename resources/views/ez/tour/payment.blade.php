@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', 'Ez Travel - Tour`s Form')
-
+<script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
 @section('content')
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav cl-effect-11">
@@ -96,16 +96,112 @@
                     </div>
                 </center>
                 <br>
+                <style>
+                    .payment-methods {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .payment-methods:after {
+                        content: "";
+                        clear: both;
+                    }
+
+                    .payment-method {
+                        border: 1px solid #ccc;
+                        box-sizing: border-box;
+                        float: left;
+                        height: 70px;
+                        position: relative;
+                        width: 120px;
+                    }
+
+                    .payment-method label {
+                        background: #fff no-repeat center center;
+                        bottom: 1px;
+                        cursor: pointer;
+                        display: block;
+                        font-size: 0;
+                        left: 1px;
+                        position: absolute;
+                        right: 1px;
+                        text-indent: 100%;
+                        top: 1px;
+                        white-space: nowrap;
+                    }
+
+                    .payment-method + .payment-method {
+                        margin-left: 25px;
+                    }
+
+                    .bca label {
+                        background-image: url({{asset('images/bca.jpg')}});
+                        background-size: 100%;
+                    }
+
+                    .bri label {
+                        background-image: url({{asset('images/bri.jpg')}});
+                        background-size: 100%;
+                    }
+
+                    .bni label {
+                        background-image: url({{asset('images/bni.jpg')}});
+                        background-size: 100%;
+                    }
+
+                    .mandiri label {
+                        background-image: url({{asset('images/mandiri.jpg')}});
+                        background-size: 100%;
+                    }
+
+                    .alfamart label {
+                        background-image: url({{asset('images/alfamart.jpg')}});
+                        background-size: 100%;
+                    }
+
+                    .indomaret label {
+                        background-image: url({{asset('images/indomaret.jpg')}});
+                        background-size: 100%;
+                    }
+
+                    .payment-methods input:focus + label {
+                        outline: 2px dotted #21b4d0;
+                    }
+
+                    .payment-methods input:checked + label {
+                        outline: 4px solid #21b4d0;
+                    }
+
+                    .payment-methods input:checked + label:after {
+                        background: url(https://dl.dropbox.com/s/vm6hpxjqbupy1xv/checked.png);
+                        bottom: -10px;
+                        content: "";
+                        display: inline-block;
+                        height: 20px;
+                        position: absolute;
+                        right: -10px;
+                        width: 20px;
+                    }
+
+                    @-moz-document url-prefix() {
+                        .payment-methods input:checked + label:after {
+                            bottom: 0;
+                            right: 0;
+                            background-color: #21b4d0;
+                        }
+                    }
+                </style>
                 <div class="w3-container -align-center center-block">
                     <div class="col-md-12">
                         <h2><i class="fa fa-bank"></i> Selesaikan Pembayaran</h2>
                         <div class="w3-panel w3-card">
                             <br>
                             <h4 style="color: #0C4487" id="demo"></h4> <h4>Sisa waktu anda</h4>
-
                             <script>
                                 // Set the date we're counting down to
-                                var countDownDate = new Date("June 03, 2017 15:37:25").getTime();
+                                var countDownDate = new Date("{{$sekarang}}");
+                                countDownDate.setDate(countDownDate.getDate() + 1);
 
                                 // Update the count down every 1 second
                                 var x = setInterval(function () {
@@ -123,7 +219,7 @@
                                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                                     // Output the result in an element with id="demo"
-                                    document.getElementById("demo").innerHTML = days + " hari " + hours + " jam "
+                                    document.getElementById("demo").innerHTML = hours + " jam "
                                         + minutes + " menit " + seconds + " detik ";
 
                                     // If the count down is over, write some text
@@ -133,32 +229,92 @@
                                     }
                                 }, 1000);
                             </script>
-                            <br><br><br><br><br><br>
-                            <p>Setelah anda melakukan pembayaran, silahkan klik tombol dibawah ini</p>
-                            <br>
-                            <?php $harga = ($request->total) ?>
-                            <form class="form-horizontal" role="form" method="post" action="/ez/tour/tours">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="name" value="{{$request->name}}">
-                                <input type="hidden" name="email" value="{{$request->email}}">
-                                <input type="hidden" name="phone" value="{{$request->phone}}">
-                                <input type="hidden" name="total" value="{{$harga}}">
-                                <input type="hidden" name="destination" value="{{$request->destination}}">
-                                <input type="hidden" name="tgl_keberangkatan" value="{{$request->tgl_keberangkatan}}">
-                                <input type="hidden" name="jml_orang" value="{{$request->jml_orang}}">
-                                <input type="hidden" name="catatan" value="{{$request->catatan}}">
-                                <button title="Dengan mengklik tombol ini maka anda akan mendapatkan nomor booking."
-                                        data-toggle="tooltip" data-placement="bottom" type="submit"
-                                        class="btn btn-primary"><strong>KONFIRMASI PEMBAYARAN <i
-                                                class="fa fa-chevron-right"></i></strong></button>
-                                <script>
-                                    $(document).ready(function () {
-                                        $('[data-toggle="tooltip"]').tooltip();
-                                    });
-                                </script>
-                            </form>
-                            <br>
+                            <br><br>
+                            <h4 style="color: #0C4487" id="demo"></h4> <h4>Pilih Metode Pembayaran</h4>
+                            <div class="col-md-12">
+                                <ul class="payment-methods">
+                                    <li class="payment-method bca">
+                                        <input name="payment_methods" value="1" type="radio" id="bca" data-id="tf">
+                                        <label for="bca">BCA</label>
+                                    </li>
+                                    <li class="payment-method bri">
+                                        <input name="payment_methods" value="2" type="radio" id="bri" data-id="tf">
+                                        <label for="bri">BRI</label>
+                                    </li>
+                                    <li class="payment-method bni">
+                                        <input name="payment_methods" value="3" type="radio" id="bni" data-id="tf">
+                                        <label for="bni">BNI</label>
+                                    </li>
+                                    <li class="payment-method mandiri">
+                                        <input name="payment_methods" value="4" type="radio" id="mandiri" data-id="tf">
+                                        <label for="mandiri">Mandiri</label>
+                                    </li>
+                                    <li class="payment-method alfamart">
+                                        <input name="payment_methods" value="5" type="radio" id="alfamart"
+                                               data-id="alfamart_form">
+                                        <label for="alfamart">Alfamart</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <style>
+                                .none {
+                                    display: none;
+                                }
+                            </style>
+                            <div id="alfamart_form" class="col-lg-12 none">
+                                <?php
+                                $harga = $request->total;
+                                $rpharga = number_format($harga, 2, ",", ".");
+                                $total = $harga - 10;
+                                $rptotal = number_format($total, 2, ",", '.');
+                                ?>
+                                <p><strong>Price Details</strong></p>
+                                <p>Harga Tiket: Rp{{$rpharga}}</p>
+                                <p>Unique Code: <strong>Rp -10</strong></p>
+                                <p>--------------------------------------</p>
+                                <p>Total Harga: <strong>Rp{{$rptotal}}</strong></p>
+                            </div>
+                            <div id="tf" class="col-lg-12 none">
+                                <?php
+                                $harga = $request->total;
+                                $total = $harga + 2000;
+                                ?>
+                                <p><strong>Gunakan Kode Berikut</strong></p>
+                                <p>Unique Code: <strong>{{$payment}}20</strong></p>
+                            </div>
+                            <script>
+                                $(':radio').change(function (event) {
+                                    var id = $(this).data('id');
+                                    $('#' + id).addClass('none').siblings().removeClass('none');
+                                });
+                            </script>
+                            <div id="konfirmasi">
+                                <p><br><br><br>Setelah anda melakukan pembayaran, silahkan klik tombol dibawah ini</p>
+                                <form class="form-horizontal" role="form" method="post" action="/ez/tour/tours">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="id_payment" value="1">
+                                    <input type="hidden" name="name" value="{{$request->name}}">
+                                    <input type="hidden" name="email" value="{{$request->email}}">
+                                    <input type="hidden" name="phone" value="{{$request->phone}}">
+                                    <input type="hidden" name="total" value="{{$total}}">
+                                    <input type="hidden" name="destination" value="{{$request->destination}}">
+                                    <input type="hidden" name="tgl_keberangkatan"
+                                           value="{{$request->tgl_keberangkatan}}">
+                                    <input type="hidden" name="jml_orang" value="{{$request->jml_orang}}">
+                                    <input type="hidden" name="catatan" value="{{$request->catatan}}">
+                                    <button title="Dengan mengklik tombol ini maka anda akan mendapatkan nomor booking."
+                                            data-toggle="tooltip" data-placement="bottom" type="submit"
+                                            class="btn btn-primary"><strong>KONFIRMASI PEMBAYARAN <i
+                                                    class="fa fa-chevron-right"></i></strong></button>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('[data-toggle="tooltip"]').tooltip();
+                                        });
+                                    </script>
+                                </form>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

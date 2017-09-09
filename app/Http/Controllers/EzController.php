@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\City;
 use App\contact;
 use App\Http\Requests;
+use App\Libs\TransferPayment;
 use App\Marker;
 use App\operator;
 use App\Tour;
 use App\tourform;
 use App\travel;
 use App\travelform;
+use App\voucher;
 use Illuminate\Support\Facades\App;
 use PDF;
 use App\User;
@@ -61,7 +63,8 @@ class EzController extends Controller
             'city' => $ez
         ];
         $sql = DB::table('tourpicts')->select('tourpicts.url', 'tourpicts.caption', 'tours.id', 'tourpicts.tour_id')->leftjoin('tours', 'tourpicts.tour_id', '=', 'tours.id')->get();
-        return view('ez/tour/detail', $data, compact('tour', 'sql'));
+        $voucher = DB::table('vouchers')->orderby('id', 'desc')->limit(1)->get();
+        return view('ez/tour/detail', $data, compact('tour', 'sql', 'voucher'));
     }
 
     public function showTourForm(Tour $tour, Request $request)
@@ -76,15 +79,19 @@ class EzController extends Controller
 
     public function showReviewTourForm(Request $request)
     {
+        $voucher = Input::get('voucher');
+        $now = date("Y-m-d h:i:s");
         $request->all();
         $sql = DB::table('tourforms')->ORDERBY('id', 'desc')->LIMIT(1)->get();
-        return view('ez/tour/review', compact('request', 'sql'));
+        return view('ez/tour/review', compact('request', 'sql', 'now', 'voucher'));
     }
 
     public function showPaymentTourForm(Request $request)
     {
+        $sekarang = $request->now;
         $request->all();
-        return view('ez/tour/payment', compact('request'));
+        $payment = transferPayment::alfamartPayment();
+        return view('ez/tour/payment', compact('request', 'sekarang', 'payment'));
     }
 
     public function tourstore(Request $request)
@@ -180,15 +187,17 @@ class EzController extends Controller
 
     public function showReviewTravelForm(Request $request)
     {
+        $now = date("Y-m-d h:i:s");
         $request->all();
         $sql = DB::table('travelforms')->ORDERBY('id', 'desc')->LIMIT(1)->get();
-        return view('ez/travel/review', compact('request', 'sql'));
+        return view('ez/travel/review', compact('request', 'sql', 'now'));
     }
 
     public function showPaymentTravelForm(Request $request)
     {
+        $sekarang = $request->now;
         $request->all();
-        return view('ez/travel/payment', compact('request'));
+        return view('ez/travel/payment', compact('request', 'sekarang'));
     }
 
     public function travelstore(Request $request)

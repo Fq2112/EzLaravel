@@ -6,6 +6,7 @@ use App\Admin;
 use App\contact;
 use App\tour;
 use App\tourform;
+use App\tourpicts;
 use App\travel;
 use App\travelform;
 use App\User;
@@ -263,6 +264,30 @@ class AdminController extends Controller
         /*tour::create($request->all());
         Session::flash('add', 'Successfully, added!');
         return redirect('admin/tourcontent#tour');*/
+    }
+
+    public function storeTourPict(Request $request)
+    {
+        $input = $request->all();
+        if ($request->hasFile('url')) {
+            $img = $request->file('url');
+            $name = $img->getClientOriginalName();
+            if ($request->file('url')->isValid()) {
+                $request->url->storeAs('public/tour/tourpict', $name);
+                $input['url'] = $name;
+            }
+        } else {
+            Session::flash('file', 'There`s no any file selected...');
+            return redirect('admin/tourcontent#tour');
+        }
+        $add = tourpicts::create($input);
+        if ($add) {
+            Session::flash('add', 'Successfully, added!');
+            return redirect('admin/tourcontent#tour');
+        } else {
+            Session::flash('gagal', 'Failed to create Tour Data!');
+            return redirect('admin/tourcontent#tour');
+        }
     }
 
     public function showEditTourForm(tour $tour)

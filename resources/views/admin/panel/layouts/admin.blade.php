@@ -104,12 +104,12 @@
                                 <ul class="menu">
                                     @if($ordertour >= 1)
                                         <li>
-                                            <a href="#">
+                                            <a href="{{url('admin/tables#tour')}}">
                                                 @if($ordertour > 1)
-                                                    <i class="fa fa-bus text-teal"></i> {{$ordertour}} new tour
+                                                    <i class="fa fa-globe text-teal"></i> {{$ordertour}} new tour
                                                     orders submitted today
                                                 @else
-                                                    <i class="fa fa-bus text-teal"></i> a new tour
+                                                    <i class="fa fa-globe text-teal"></i> a new tour
                                                     order submitted today
                                                 @endif
                                             </a>
@@ -117,7 +117,7 @@
                                     @endif
                                     @if($ordertravel >= 1)
                                         <li>
-                                            <a href="#">
+                                            <a href="{{url('admin/tables#travel')}}#">
                                                 @if($ordertravel > 1)
                                                     <i class="fa fa-bus text-teal"></i> {{$ordertravel}} new travel
                                                     orders submitted today
@@ -130,7 +130,7 @@
                                     @endif
                                     @if($member >= 1)
                                         <li>
-                                            <a href="#">
+                                            <a href="{{url('admin/tables#member')}}">
                                                 @if($member > 1)
                                                     <i class="fa fa-users text-yellow"></i> {{$member}} new members
                                                     joined
@@ -144,7 +144,7 @@
                                     @endif
                                     @if($contact >= 1)
                                         <li>
-                                            <a href="#">
+                                            <a href="{{url('admin/tables#feedback')}}">
                                                 @if($contact > 1)
                                                     <i class="fa fa-envelope text-red"></i> We got {{$contact}} new
                                                     feedback

@@ -50,8 +50,22 @@ class EditController extends Controller
 
     public function showHistoryForm(User $user)
     {
+        $tourorder = DB::table('tourforms')->where('email', $user->email)->count();
+        $travelorder = DB::table('travelforms')->where('email', $user->email)->count();
         $tour = DB::table('tourforms')->get();
         $travel = DB::table('travelforms')->get();
-        return view('auth.history', compact('user', 'tour', 'travel'));
+        return view('auth.history', compact('user', 'tour', 'travel', 'tourorder', 'travelorder'));
+    }
+
+    public function cetakTour(User $user)
+    {
+        $tourform = DB::table('tourforms')->get();
+        return view('auth.cetaktour', compact('user', 'tourform'));
+    }
+
+    public function cetakTravel(User $user)
+    {
+        $travelform = DB::table('travelforms')->get();
+        return view('auth.cetaktravel', compact('user', 'travelform'));
     }
 }

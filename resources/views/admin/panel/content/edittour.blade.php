@@ -307,6 +307,83 @@
                         </div>
                         <!-- /.box-body -->
                     </div>
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title"><i class="fa fa-image"></i> &nbsp;Add Tour Picts</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <form method="post" class="form-horizontal" action="{{url('admin/tourcontent/tourpict')}}"
+                                  enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="form-group{{ $errors->has('url') ? ' has-error' : '' }} has-feedback">
+                                    <label for="inputName" class="col-sm-2 control-label">Gambar Slider Tour</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group">
+                                            <label class="input-group-btn">
+                                                    <span class="btn btn-info">
+                                                        Browse&hellip;<input name="url" type="file"
+                                                                             style="display: none;" required>
+                                                    </span>
+                                            </label>
+                                            <input type="text" id="img_gallery"
+                                                   class="form-control" required readonly>
+                                        </div>
+                                        <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+                                        @if ($errors->has('url'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('url') }}</strong>
+                                            </span>
+                                        @endif
+                                        @if(session('file'))
+                                            <span class="help-block">
+                                                <strong>{{ session('file') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group{{ $errors->has('caption') ? ' has-error' : '' }} has-feedback">
+                                    <label for="inputName" class="col-sm-2 control-label">Caption</label>
+                                    <div class="col-sm-8">
+                                        <input placeholder="ex: GWK (Garuda Wisnu Kencana)" type="text" name="caption"
+                                               class="form-control">
+                                        <span class="fa fa-sticky-note form-control-feedback"></span>
+                                        @if ($errors->has('caption'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('caption') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div style="visibility: hidden"
+                                     class="form-group{{ $errors->has('tour_id') ? ' has-error' : '' }} has-feedback">
+                                    <label for="inputName" class="col-sm-2 control-label">ID Tour</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="tour_id" class="form-control" value="{{$tour->id}}">
+                                        <span class="fa fa-building form-control-feedback"></span>
+                                        @if ($errors->has('tour_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('tour_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-8">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
                 </div>
                 <!-- /.col -->
             </div>
