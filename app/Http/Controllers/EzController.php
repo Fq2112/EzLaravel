@@ -79,19 +79,22 @@ class EzController extends Controller
 
     public function showReviewTourForm(Request $request)
     {
+        $bank = transferPayment::bankPayment();
+        $non_bank = transferPayment::non_bankPayment();
+
         $voucher = Input::get('voucher');
         $now = date("Y-m-d h:i:s");
         $request->all();
         $sql = DB::table('tourforms')->ORDERBY('id', 'desc')->LIMIT(1)->get();
-        return view('ez/tour/review', compact('request', 'sql', 'now', 'voucher'));
+        return view('ez/tour/review', compact('request', 'sql', 'now', 'voucher', 'bank', 'non_bank'));
     }
 
     public function showPaymentTourForm(Request $request)
     {
         $sekarang = $request->now;
         $request->all();
-        $payment = transferPayment::alfamartPayment();
-        return view('ez/tour/payment', compact('request', 'sekarang', 'payment'));
+        $non_bank = transferPayment::non_bankPayment();
+        return view('ez/tour/payment', compact('request', 'sekarang', 'non_bank'));
     }
 
     public function tourstore(Request $request)

@@ -6,16 +6,15 @@ namespace App\Libs;
 class TransferPayment extends PaymentMethod
 {
     private $bca;
-    private $bri;
-    private $bni;
     private $mandiri;
     private $alfamart;
+    private $indomaret;
 
     public function unique_code()
     {
-        if ($this->bca || $this->bri || $this->bni || $this->mandiri) {
+        if ($this->bca || $this->mandiri) {
             $kode = 10;
-        } elseif ($this->alfamart) {
+        } elseif ($this->alfamart || $this->indomaret) {
             $kode = str_random();
         } else {
             $kode = 0;
@@ -23,7 +22,12 @@ class TransferPayment extends PaymentMethod
         return $kode;
     }
 
-    public static function alfamartPayment()
+    public static function bankPayment()
+    {
+        return 10;
+    }
+
+    public static function non_bankPayment()
     {
         return str_random();
     }

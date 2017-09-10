@@ -194,10 +194,10 @@
                 </style>
                 <div class="w3-container -align-center center-block">
                     <div class="col-md-12">
-                        <h2><i class="fa fa-bank"></i> Selesaikan Pembayaran</h2>
-                        <div class="w3-panel w3-card">
+                        <h2><i class="fa fa-bank"></i> Selesaikan Pembayaran </h2>
+                        Sisa Waktu anda: <h4 style="color: #0C4487" id="demo"></h4>
+                        <div class="w3-panel w3-card text-center">
                             <br>
-                            <h4 style="color: #0C4487" id="demo"></h4> <h4>Sisa waktu anda</h4>
                             <script>
                                 // Set the date we're counting down to
                                 var countDownDate = new Date("{{$sekarang}}");
@@ -229,74 +229,62 @@
                                     }
                                 }, 1000);
                             </script>
-                            <br><br>
-                            <h4 style="color: #0C4487" id="demo"></h4> <h4>Pilih Metode Pembayaran</h4>
-                            <div class="col-md-12">
-                                <ul class="payment-methods">
-                                    <li class="payment-method bca">
-                                        <input name="payment_methods" value="1" type="radio" id="bca" data-id="tf">
-                                        <label for="bca">BCA</label>
-                                    </li>
-                                    <li class="payment-method bri">
-                                        <input name="payment_methods" value="2" type="radio" id="bri" data-id="tf">
-                                        <label for="bri">BRI</label>
-                                    </li>
-                                    <li class="payment-method bni">
-                                        <input name="payment_methods" value="3" type="radio" id="bni" data-id="tf">
-                                        <label for="bni">BNI</label>
-                                    </li>
-                                    <li class="payment-method mandiri">
-                                        <input name="payment_methods" value="4" type="radio" id="mandiri" data-id="tf">
-                                        <label for="mandiri">Mandiri</label>
-                                    </li>
-                                    <li class="payment-method alfamart">
-                                        <input name="payment_methods" value="5" type="radio" id="alfamart"
-                                               data-id="alfamart_form">
-                                        <label for="alfamart">Alfamart</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <style>
-                                .none {
-                                    display: none;
-                                }
-                            </style>
-                            <div id="alfamart_form" class="col-lg-12 none">
-                                <?php
-                                $harga = $request->total;
-                                $rpharga = number_format($harga, 2, ",", ".");
-                                $total = $harga - 10;
-                                $rptotal = number_format($total, 2, ",", '.');
-                                ?>
-                                <p><strong>Price Details</strong></p>
-                                <p>Harga Tiket: Rp{{$rpharga}}</p>
-                                <p>Unique Code: <strong>Rp -10</strong></p>
-                                <p>--------------------------------------</p>
-                                <p>Total Harga: <strong>Rp{{$rptotal}}</strong></p>
-                            </div>
-                            <div id="tf" class="col-lg-12 none">
-                                <?php
-                                $harga = $request->total;
-                                $total = $harga + 2000;
-                                ?>
-                                <p><strong>Gunakan Kode Berikut</strong></p>
-                                <p>Unique Code: <strong>{{$payment}}20</strong></p>
-                            </div>
-                            <script>
-                                $(':radio').change(function (event) {
-                                    var id = $(this).data('id');
-                                    $('#' + id).addClass('none').siblings().removeClass('none');
-                                });
-                            </script>
+                            <?php $rp = number_format($request->total, 2, ",", ".") ?>
+                            @if($request->payment_methods == 'Alfamart' || $request->payment_methods == 'Indomaret')
+                                <h4>Mohon segera melakukan pembayaran sebesar <strong>Rp{{$rp}}</strong> dengan
+                                    menggunakan kode berikut:</h4>
+                                <h4><strong>{{$non_bank}}</strong></h4>
+                            @else
+                                <h4>Mohon transfer <strong>Rp{{$rp}}</strong> ke rekening berikut:</h4>
+                            @endif
+                            <br>
+                            @if($request->payment_methods == 'BCA')
+                                <img src="{{asset('images/bca.jpg')}}" style="width: 25%">
+                                <p>No. rek: <strong>12345-67-89-101112-3</strong><br>a/n. <strong>Gusti Bagus Rangga
+                                        Saputra</strong></p>
+                            @elseif($request->payment_methods == 'Mandiri')
+                                <img src="{{asset('images/mandiri.jpg')}}" style="width: 25%">
+                                <p>No. rek: <strong>11111-67-89-101112-3</strong><br>a/n. <strong>Gusti Bagus Rangga
+                                        Saputra</strong></p>
+                            @elseif($request->payment_methods == 'Alfamart')
+                                <img src="{{asset('images/alfamart.jpg')}}" style="width: 25%">
+                            @else
+                                <img src="{{asset('images/indomaret.jpg')}}" style="width: 25%">
+                            @endif
+                            <br>
+                            <p>Setelah anda melakukan pembayaran, mohon upload bukti pembayaran ke kontak
+                                berikut:</p>
+                            <p style="color: black; font-weight: bold">Tap me!<br>
+                                <a href="http://line.me/ti/p/~fitrotindwi"><img
+                                            src="{{asset('images/LINE_icon01.png')}}"
+                                            width="40"
+                                            height="40"></a>
+                                <a href="whatsapp://send?text=Hello, Fitro!&phone=+6289675014272&abid=+6289675014272"><img
+                                            src="{{asset('images/Whatsapp-ios-7-icon.png')}}" width="40"
+                                            height="40"></a>
+                            </p>
+                            <p>
+                                <b>Fitrotin</b>: fitrotindwi | 089675014272<br>
+                                <b>Adib</b>: Hafiizh04 | 087757232330
+                            </p>
+                            <hr>
                             <div id="konfirmasi">
-                                <p><br><br><br>Setelah anda melakukan pembayaran, silahkan klik tombol dibawah ini</p>
+                                <p>Setelah itu, silahkan klik tombol dibawah ini.</p>
                                 <form class="form-horizontal" role="form" method="post" action="/ez/tour/tours">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="id_payment" value="1">
+                                    @if($request->payment_methods == 'BCA')
+                                        <input type="hidden" name="id_payment" value="1">
+                                    @elseif($request->payment_methods == 'Mandiri')
+                                        <input type="hidden" name="id_payment" value="2">
+                                    @elseif($request->payment_methods == 'Alfamart')
+                                        <input type="hidden" name="id_payment" value="3">
+                                    @else
+                                        <input type="hidden" name="id_payment" value="4">
+                                    @endif
                                     <input type="hidden" name="name" value="{{$request->name}}">
                                     <input type="hidden" name="email" value="{{$request->email}}">
                                     <input type="hidden" name="phone" value="{{$request->phone}}">
-                                    <input type="hidden" name="total" value="{{$total}}">
+                                    <input type="hidden" name="total" value="{{$request->total}}">
                                     <input type="hidden" name="destination" value="{{$request->destination}}">
                                     <input type="hidden" name="tgl_keberangkatan"
                                            value="{{$request->tgl_keberangkatan}}">
@@ -313,8 +301,8 @@
                                     </script>
                                 </form>
                             </div>
+                            <h5>&nbsp;</h5>
                         </div>
-
                     </div>
                 </div>
             </div>

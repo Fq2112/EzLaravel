@@ -116,6 +116,17 @@
                                     <td><br>&nbsp;:&nbsp;&nbsp;</td>
                                     <td><br><strong>{{$request->phone}}</strong></td>
                                 </tr>
+                                <tr>
+                                    <td><br>Metode Pembayaran</td>
+                                    <td><br>&nbsp;:&nbsp;&nbsp;</td>
+                                    <td><br>
+                                        @if($request->payment_methods == "BCA" || $request->payment_methods == "Mandiri")
+                                            <strong>Transfer {{$request->payment_methods}}</strong>
+                                        @else
+                                            <strong>Melalui {{$request->payment_methods}}</strong>
+                                        @endif
+                                    </td>
+                                </tr>
                             </table>
                             <br>
                         </div>
@@ -125,12 +136,14 @@
                         <div class="w3-panel w3-card-4"><br>
                             <?php
                             $harga = ($request->jml_orang) * ($request->total);
+                            $dibayar = $harga - $bank;
                             if ($voucher == 'uas2016') {
                                 $totvoucher = $harga / 10;
                                 $rpvoucher = number_format($totvoucher, 2, ",", ".");
                             }
                             $rptotal = number_format($harga, 2, ",", ".");
                             $rpharga = number_format($request->total, 2, ",", ".");
+                            $rpdibayar = number_format($dibayar, 2, ",", ".");
                             ?>
                             <table>
                                 @if($voucher == 'uas2017')
@@ -194,7 +207,7 @@
                                     <tr>
                                         <td>Harga Tour per Orang</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td align="right"><strong>{{$rpharga}}</strong>&nbsp;&nbsp;&nbsp;</td>
+                                        <td align="right"><strong>Rp{{$rpharga}}</strong>&nbsp;&nbsp;&nbsp;</td>
                                     </tr>
                                     <tr>
                                         <td>Jumlah Peserta</td>
@@ -209,9 +222,32 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>Total Harga</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td align="right"><strong>Rp{{$rptotal}}</strong>&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unique Code</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td align="right">
+                                            @if($request->payment_methods == "BCA" || $request->payment_methods == "Mandiri")
+                                                <strong>Rp -{{$bank}}</strong>&nbsp;&nbsp;&nbsp;
+                                            @else
+                                                <strong>{{$non_bank}}</strong>&nbsp;&nbsp;&nbsp;
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td align="right">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&nbsp;<strong>&minus;</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td><h4><strong>Harga yang Harus Dibayar</strong></h4></td>
                                         <td><h4><strong>&nbsp;:&nbsp;&nbsp;</strong></h4></td>
-                                        <td align="right"><h4><strong>Rp{{$rptotal}}</strong>&nbsp;&nbsp;&nbsp;</h4>
+                                        <td align="right"><h4><strong>Rp{{$rpdibayar}}</strong>&nbsp;&nbsp;&nbsp;</h4>
                                         </td>
                                     </tr>
                                 @endif
@@ -280,6 +316,7 @@
                                 <form class="form-horizontal" role="form" method="get" action="/ez/tour/payment">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="name" value="{{$request->name}}">
+                                    <input type="hidden" name="payment_methods" value="{{$request->payment_methods}}">
                                     <input type="hidden" name="email" value="{{$request->email}}">
                                     <input type="hidden" name="phone" value="{{$request->phone}}">
                                     @if($voucher == 'uas2017')
@@ -287,7 +324,7 @@
                                     @elseif($voucher == 'uas2016')
                                         <input type="hidden" name="total" value="{{$totvoucher}}">
                                     @else
-                                        <input type="hidden" name="total" value="{{$harga}}">
+                                        <input type="hidden" name="total" value="{{$dibayar}}">
                                     @endif
                                     <input type="hidden" name="destination" value="{{$request->destination}}">
                                     <input type="hidden" name="tgl_keberangkatan"
